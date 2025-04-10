@@ -1,0 +1,7 @@
+src/
+  ├── server.ts          # Main server file
+  ├── app.ts             # Express app configuration
+  ├── controllers/       # Controllers for routes
+  ├── routes/            # Route definitions
+  ├── models/            # Data structures/interfaces
+  ├── services/          # Matchmaking & signaling logic
