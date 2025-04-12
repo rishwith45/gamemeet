@@ -36,21 +36,25 @@ const RemoteVideo: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: "10px",
-          left: "10px",
+          bottom: "0px",
+          left: "0px",
           display: "flex",
           gap: "10px",
+          backgroundColor: "black",
+          width: "fit-content",
+          padding: "5px",
+          borderTopRightRadius: "5px",
         }}
       >
         {audioVideo.audio ? (
-          <Mic color="red" size={15} />
+          <Mic color="white" size={15} />
         ) : (
-          <MicOff color="red" size={15} />
+          <MicOff color="white" size={15} />
         )}
         {audioVideo.video ? (
-          <Video color="red" size={15} />
+          <Video color="white" size={15} />
         ) : (
-          <VideoOff color="red" size={15} />
+          <VideoOff color="white" size={15} />
         )}
       </div>
     </div>

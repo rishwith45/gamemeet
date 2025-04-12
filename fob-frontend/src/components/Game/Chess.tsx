@@ -160,7 +160,7 @@ const ChessGame: React.FC = () => {
       <div className="chessboard-container">
         <Chessboard
           position={fen}
-          boardWidth={380}
+          boardWidth={390}
           onPieceDrop={handleMove}
           boardOrientation={orientation}
           arePiecesDraggable={!isGameOver && (isMyTurn as boolean)}
@@ -181,18 +181,13 @@ const ChessGame: React.FC = () => {
           margin-bottom: 10px;
         }
         .chessboard-container {
-          width:380px;
-          height: 380px;
+          width:390px;
+          height: 390px;
           display: flex;
           justify-content: center;
           align-items: center;
         }
-        .chessboard-container > div {
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 480px;
-          max-height: 480px;
-        }
+       
       `}</style>
     </div>
   );

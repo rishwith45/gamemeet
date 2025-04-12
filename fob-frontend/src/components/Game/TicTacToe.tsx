@@ -147,22 +147,10 @@ const TicTacToe: React.FC = () => {
           row.map((cell, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className="cell"
+              className={`cell ${
+                cell === "X" ? "x-cell" : cell === "O" ? "o-cell" : ""
+              }`}
               onClick={() => makeMove(rowIndex, colIndex)}
-              style={{
-                background: cell
-                  ? cell === "X"
-                    ? "#ff4d4d"
-                    : "#4d94ff"
-                  : "white",
-                border: "2px solid black",
-                color: "black",
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
             >
               {cell}
             </div>
@@ -171,44 +159,77 @@ const TicTacToe: React.FC = () => {
       </div>
 
       <style>{`
-        .tictactoe-container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-          color: white;
-          font-size: 24px;
-          padding: 20px;
-        }
+      .tictactoe-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background: #000; /* Pure black background */
+}
 
-        .game-board {
-          display: grid;
-          grid-template-columns: repeat(${SIZE}, 1fr);
-          grid-template-rows: repeat(${SIZE}, 1fr);
-          width: 100%;
-          height: 100%;
-          max-width: 380px;
-          max-height: 380px;
-          background: red;
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+.game-status {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
 
-        }
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(${SIZE}, 1fr);
+  grid-template-rows: repeat(${SIZE}, 1fr);
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 400px;
 
-        .cell {
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-          transition: background 0.3s ease;
-        }
+  aspect-ratio: 1 / 1;
+   background: radial-gradient(circle at center,rgb(242, 35, 246),rgb(176, 101, 238));
+  border-radius: 20px;
+  box-shadow: 0 0 25px #00ffff80;
+  overflow: hidden;
+  gap: 8px;
+  padding: 12px;
+}
 
-        .game-status {
-           font-size: 20px;
-          margin-bottom: 10px;
-        }
+.cell {
+  background:rgb(255, 255, 255); /* ⬅️ Visible on black */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+  box-shadow: inset 0 0 6px #000000aa;
+}
+
+.cell:hover {
+  transform: scale(1.05);
+ 
+   background:rgb(222, 179, 241);
+}
+
+.x-cell {
+  background:rgb(222, 179, 241); /* Slight red base */
+  color:rgb(247, 62, 62);
+  text-shadow: 0 0 18px #ff4d4d;
+  font-size: 4rem;
+}
+
+.o-cell {
+   background:rgb(222, 179, 241); /* Slight blue base */
+  color: #4d94ff;
+  text-shadow: 0 0 18px #4d94ff;
+  font-size: 4rem;
+}
+
       `}</style>
     </div>
   );

@@ -32,9 +32,10 @@ const VideoController: React.FC<VideoControllerProps> = ({
   }, [screenWidth]);
 
   // Define colors
-  const videoButtonColor = "rgba(50, 66, 213, 0.81)"; // Local Stream (Blue)
-  const audioButtonColor = "rgba(76, 220, 51, 0.76)"; // Remote Stream (Green)
-  const closeButtonColor = "rgba(255, 0, 0, 0.85)"; // Red for close
+  const videoButtonColor = "rgba(41, 42, 43, 0.81)"; // Local Stream (Blue)
+  const audioButtonColor = "rgba(41, 42, 43, 0.81)";
+  const closeButtonColor = "rgba(248, 28, 28, 0.92)"; // Red for close
+
   const boxShadowColor = "rgba(0, 0, 0, 0.4)";
 
   // Common button styles

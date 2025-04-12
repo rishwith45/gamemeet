@@ -10,6 +10,7 @@ import { useGameOver } from "../gameContexts/GameOverContext";
 import { useSelectedGame } from "../gameContexts/SelectedGameContext";
 import { io, Socket } from "socket.io-client";
 import { useToken } from "../contexts/TokenContext";
+import { useSelfAudioVideo } from "../contexts/SelfAudioVideoContext";
 
 const useWebRtc = () => {
   const { pc } = usePc();
@@ -28,6 +29,8 @@ const useWebRtc = () => {
   const { token } = useToken();
   const [addedMediaDevices, setAddedMediaDevices] = useState<boolean>(false);
   const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+  const { setAudioVideo } = useSelfAudioVideo();
+
   useEffect(() => {
     const signaling = async () => {
       console.log(token);
@@ -249,6 +252,7 @@ const useWebRtc = () => {
       status: false,
       statusMessage: "searching for Player... , please wait",
     });
+    setAudioVideo({ audio: true, video: true });
     setSelectedGame(null);
     navigate("/");
   }, [navigate, setGameOver, setPeerConnectionStatus]);

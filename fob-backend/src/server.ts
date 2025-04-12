@@ -11,12 +11,14 @@ const PORT = process.env.PORT;
 const MAX_TOKEN_REQUESTS_PER_MIN = 10;
 const tokensPerMinute = new Map<string, number>();
 const FRONTEND_URL = process.env.FRONTEND_URL;
+const userManager = new UserManager();
+
 console.log("Frontend URL:", FRONTEND_URL);
 
 setInterval(() => {
   console.log("Clearing ips");
   tokensPerMinute.clear();
-}, 60 * 1000);
+}, 30 * 1000);
 
 const app = express();
 
@@ -36,9 +38,12 @@ const rateLimitToken = (
   const ip = req.ip as string;
 
   console.log(ip);
+  console.log(userManager.matchUsers.length);
+  console.log(userManager.users.length);
+  console.log(userManager.room.size);
   const count = tokensPerMinute.get(ip) || 0;
 
-  if (count >= MAX_TOKEN_REQUESTS_PER_MIN) {
+  if (count >= MAX_TOKEN_REQUESTS_PER_MIN || userManager.room.size >= 500) {
     res.status(429).json({ error: "Too many token requests" });
     return;
   }
@@ -50,7 +55,7 @@ app.use("/get-token", rateLimitToken);
 
 app.get("/get-token", (req, res) => {
   const token = jwt.sign({ session: Date.now() }, JWT_SECRET, {
-    expiresIn: "5m",
+    expiresIn: "3m",
   });
   res.json({ token });
 });
@@ -66,8 +71,6 @@ io.use((socket, next) => {
   }
 });
 
-const userManager = new UserManager();
-
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
   userManager.addUser({ socket, socketId: socket.id });
@@ -75,6 +78,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
+    userManager.room.delete(socket.id);
   });
 });
 

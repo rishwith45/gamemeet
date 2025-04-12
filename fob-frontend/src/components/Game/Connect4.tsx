@@ -6,9 +6,14 @@ import { useGameOver } from "../../gameContexts/GameOverContext";
 const ROWS = 6;
 const COLS = 7;
 
-type Player = "red" | "yellow" | null;
+type Player = "green" | "yellow" | null;
 type Board = Player[][];
 type Coordinate = [number, number];
+
+const playerColors: Record<Exclude<Player, null>, string> = {
+  green: "#0079FF",
+  yellow: "#FF0060",
+};
 
 interface SelectedGameType {
   selectedGame: string | null;
@@ -32,6 +37,7 @@ const Connect4: React.FC = () => {
   const { gameStates, sendMessage, isChannelReady, setGameStates } =
     useDataChannel();
   const { setGameOver } = useGameOver();
+
   const [myColor, setMyColor] = useState<Player>(null);
   const [winner, setWinner] = useState<Player | null>(null);
   const [isMyTurn, setIsMyTurn] = useState<boolean | null>(null);
@@ -39,19 +45,21 @@ const Connect4: React.FC = () => {
 
   const board: Board = Array.isArray(gameStates.connect4?.board)
     ? gameStates.connect4!.board.map((row) =>
-        row.map((cell) => (cell === "red" || cell === "yellow" ? cell : null))
+        row.map((cell) => (cell === "green" || cell === "yellow" ? cell : null))
       )
-    : Array.from({ length: ROWS }, () => Array(COLS).fill(null)); // Default empty board
+    : Array.from({ length: ROWS }, () => Array(COLS).fill(null));
 
   useEffect(() => {
     if (!selectedGame || selectedGame.selectedGame !== "connect4") return;
-    setMyColor(selectedGame.playsFirst ? "red" : "yellow");
+    setMyColor(selectedGame.playsFirst ? "green" : "yellow");
   }, [selectedGame]);
 
   useEffect(() => {
     const tempBoard: Board | null = Array.isArray(gameStates.connect4?.board)
       ? gameStates.connect4!.board.map((row) =>
-          row.map((cell) => (cell === "red" || cell === "yellow" ? cell : null))
+          row.map((cell) =>
+            cell === "green" || cell === "yellow" ? cell : null
+          )
         )
       : null;
 
@@ -106,10 +114,10 @@ const Connect4: React.FC = () => {
 
   const checkWinner = (board: Board): void => {
     const directions: [number, number][] = [
-      [0, 1], // horizontal
-      [1, 0], // vertical
-      [1, 1], // diagonal down-right
-      [1, -1], // diagonal down-left
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [1, -1],
     ];
 
     for (let r = 0; r < ROWS; r++) {
@@ -122,8 +130,8 @@ const Connect4: React.FC = () => {
             setWinner(player);
             setWinningCoords(winningLine);
             setTimeout(() => {
-              setGameOver(true); // Mark game as over
-              setSelectedGame(null); // Reset game selection
+              setGameOver(true);
+              setSelectedGame(null);
               const message: GameMessage = {
                 type: "reset",
                 game: {
@@ -198,8 +206,10 @@ const Connect4: React.FC = () => {
               }`}
               onClick={() => dropPiece(colIndex)}
               style={{
-                background: cell || "#5c3c10",
-                border: `2px solid ${cell ? cell : "transparent"}`,
+                background: cell ? playerColors[cell] : "#5c3c10",
+                border: `2px solid ${
+                  cell ? playerColors[cell] : "transparent"
+                }`,
               }}
             />
           ))
@@ -216,9 +226,9 @@ const Connect4: React.FC = () => {
 
         .game-board {
           display: grid;
-          grid-template-columns: repeat(${COLS}, 70px);
+          grid-template-columns: repeat(${COLS}, 60px);
           gap: 10px;
-          background: #ffcc00;
+          background: rgb(70, 235, 227);
           padding: 10px;
           border-radius: 10px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -226,9 +236,8 @@ const Connect4: React.FC = () => {
         }
 
         .cell {
-          
-          width: 55px;
-          height: 55px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
           cursor: ${winner ? "not-allowed" : "pointer"};
           transition: all 0.3s ease;

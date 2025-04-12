@@ -6,9 +6,9 @@ interface User {
 }
 
 export class UserManager {
-  private matchUsers: User[];
-  private users: User[];
-  private room: Map<string, string>;
+  matchUsers: User[];
+  users: User[];
+  room: Map<string, string>;
 
   constructor() {
     this.matchUsers = [];
@@ -51,9 +51,7 @@ export class UserManager {
       );
 
       if (oppSocket) {
-        console.log("in if oppSocket");
         if (data.type === "description") {
-          console.log("sending offer");
           oppSocket.socket.emit("from-server", {
             type: "offer",
             offer: data.description,
@@ -68,6 +66,7 @@ export class UserManager {
     });
     user.socket.on("connection success", () => {
       this.users = this.users.filter((u) => u.socketId !== user.socketId);
+      this.room.delete(user.socketId);
     });
   }
   public timeout(user: User): void {
@@ -78,6 +77,7 @@ export class UserManager {
         this.matchUsers = this.matchUsers.filter(
           (u) => u.socketId !== user.socketId
         );
+        this.room.delete(user.socketId);
         console.log("🔌 Forcefully disconnected after 30 seconds");
       }
     }, 30000);

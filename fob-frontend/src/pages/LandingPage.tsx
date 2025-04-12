@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
 import { useToken } from "../contexts/TokenContext";
+import logo from "../assets/logo.png";
 
 const isMobile = () =>
   /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -22,8 +22,11 @@ const LandingPage: React.FC = () => {
       const res = await fetch(`${BACKEND_URL}/get-token`);
       const data = await res.json();
       console.log(data);
-
       mediaStream.getTracks().forEach((track) => track.stop());
+      if (data.error) {
+        alert("Too many requests, try again in few mins :(");
+        return;
+      }
 
       setToken(data.token); // Store token in state
       navigate("/playGround");
@@ -151,9 +154,8 @@ const LandingPage: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "22px",
+                fontSize: "15px",
                 fontWeight: "bold",
-                color: Math.random() > 0.5 ? "#000" : "transparent",
               }}
             >
               {Math.random() > 0.7 ? (Math.random() > 0.5 ? "X" : "O") : ""}
@@ -162,17 +164,24 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
 
-      <h1
+      <div
         style={{
           fontSize: "52px",
           fontWeight: "bold",
           marginBottom: "15px",
           textShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
-          color: "#65e892",
+          color: "#fcbf49",
         }}
       >
-        FunOnBoard <span style={{ color: "white" }}>♔</span>
-      </h1>
+        Gamemeet
+        <span style={{ marginLeft: "10px", marginTop: "20px" }}>
+          <img
+            src={logo}
+            alt="Gamemeet logo"
+            style={{ width: "40px", height: "40px", marginTop: "15px" }}
+          />
+        </span>
+      </div>
 
       <p
         style={{

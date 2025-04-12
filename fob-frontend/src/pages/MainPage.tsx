@@ -7,6 +7,7 @@ import GameSection from "../components/Game/GameSection";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "../contexts/TokenContext";
+import logo from "../assets/logo.png";
 
 const isMobile = () =>
   /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -46,6 +47,8 @@ const MainPage: React.FC = () => {
         position: "absolute",
         top: 0,
         left: 0,
+        minWidth: "950px",
+        minHeight: "660px",
         width: "100vw",
         height: "100vh",
         background: "radial-gradient(circle, #a393eb, #5e63b6,#27296d)",
@@ -67,16 +70,31 @@ const MainPage: React.FC = () => {
       >
         <h3
           style={{
-            margin: "0px",
+            margin: "13px",
+            marginTop: "0px",
+            marginRight: "0px",
+            marginLeft: "10px",
             letterSpacing: "2px",
             padding: "15px",
-            color: "#65e892", // White text for high contrast
+            paddingRight: "0px",
+            color: "#fcbf49", // White text for high contrast
             textShadow: "2px 2px 8px rgba(0, 0, 0, 0.3)", // Adds subtle depth
+            fontSize: "30px",
           }}
         >
-          FunOnBoard
-          <span style={{ color: "white" }}>♔</span>
+          GameMeet
         </h3>
+
+        <img
+          src={logo}
+          alt="Gamemeet logo"
+          style={{
+            width: "40px",
+            height: "40px",
+            marginTop: "20px",
+            marginLeft: "5px",
+          }}
+        />
       </div>
 
       <div

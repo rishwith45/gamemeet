@@ -99,7 +99,7 @@ const GameSection: React.FC<ComponentProps> = ({ closeConnections }) => {
       <div
         className="child"
         style={{
-          width: "70%",
+          width: "75%",
           height: "100%",
           display: "flex",
           alignItems: "center",
@@ -136,14 +136,17 @@ const GameSection: React.FC<ComponentProps> = ({ closeConnections }) => {
               "searching for Player... , please wait" && (
               <button
                 style={{
-                  marginTop: "12px",
-                  padding: "8px 16px",
+                  marginTop: "10px",
+                  padding: "5px 16px",
                   backgroundColor: "#dc2626",
                   color: "white",
                   borderRadius: "8px",
                   border: "none",
                   cursor: "pointer",
                   transition: "background 0.3s",
+                  width: "50x",
+                  height: "35px",
+                  fontSize: "16px",
                 }}
                 onMouseOver={(e) =>
                   (e.currentTarget.style.backgroundColor = "#b91c1c")
