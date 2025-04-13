@@ -38,8 +38,13 @@ const LandingPage: React.FC = () => {
 
   if (mobile) {
     return (
-      <div style={{ textAlign: "center", padding: "20px" }}>
-        <h2>Currently Available Only for Desktops</h2>
+      <div
+        style={{
+          textAlign: "center",
+          padding: "20px",
+        }}
+      >
+        <h2>Currently gamemeet Available Only for Desktops</h2>
         <p>Please visit this website on a desktop device.</p>
       </div>
     );

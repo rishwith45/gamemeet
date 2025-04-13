@@ -17,7 +17,6 @@ export class UserManager {
   }
 
   public addUser(user: User): void {
-    console.log("user added");
     this.users.push(user);
     this.init(user);
     this.matchUsers.push(user);
@@ -32,7 +31,6 @@ export class UserManager {
       if (user1?.socket.connected && user2?.socket.connected) {
         this.room.set(user1.socketId, user2.socketId);
         this.room.set(user2.socketId, user1.socketId);
-        console.log("room created", user1.socketId, user2.socketId);
         user1.socket.emit("room-created", { oneOffers: true });
         user2.socket.emit("room-created", { oneOffers: false });
       }
@@ -41,7 +39,6 @@ export class UserManager {
 
   public init(user: User): void {
     user.socket.on("disconnect", () => {
-      console.log("user disconnected in usermanager");
       this.users = this.users.filter((u) => u.socketId !== user.socketId);
     });
     user.socket.on("from-client", (data) => {
@@ -78,7 +75,6 @@ export class UserManager {
           (u) => u.socketId !== user.socketId
         );
         this.room.delete(user.socketId);
-        console.log("🔌 Forcefully disconnected after 30 seconds");
       }
     }, 30000);
   }
