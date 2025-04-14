@@ -20,7 +20,7 @@ export class UserManager {
     this.users.push(user);
     this.init(user);
     this.matchUsers.push(user);
-    console.log(this.users.length);
+
     this.makeMatching();
   }
 

@@ -13,10 +13,7 @@ const tokensPerMinute = new Map<string, number>();
 const FRONTEND_URL = process.env.FRONTEND_URL;
 const userManager = new UserManager();
 
-console.log("Frontend URL:", FRONTEND_URL);
-
 setInterval(() => {
-  console.log("Clearing ips");
   tokensPerMinute.clear();
 }, 30 * 1000);
 
@@ -37,10 +34,6 @@ const rateLimitToken = (
 ): void => {
   const ip = req.ip as string;
 
-  console.log(ip);
-  console.log(userManager.matchUsers.length);
-  console.log(userManager.users.length);
-  console.log(userManager.room.size);
   const count = tokensPerMinute.get(ip) || 0;
 
   if (count >= MAX_TOKEN_REQUESTS_PER_MIN || userManager.room.size >= 500) {
@@ -72,12 +65,10 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
   userManager.addUser({ socket, socketId: socket.id });
   userManager.timeout({ socket, socketId: socket.id });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
     userManager.room.delete(socket.id);
   });
 });
