@@ -15,24 +15,29 @@ const LandingPage: React.FC = () => {
 
   const handlePlayNow = async () => {
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      const res = await fetch(`${BACKEND_URL}/get-token`);
-      const data = await res.json();
-      console.log(data);
-      mediaStream.getTracks().forEach((track) => track.stop());
-      if (data.error) {
-        alert("Too many requests, try again in few mins :(");
+      const micPerm = await navigator.permissions.query({ name: "microphone" });
+      const camPerm = await navigator.permissions.query({ name: "camera" });
+
+      if (micPerm.state === "denied" || camPerm.state === "denied") {
+        alert(
+          "⚠️ You've blocked camera or microphone access. Please enable them in browser settings to play."
+        );
         return;
       }
 
-      setToken(data.token); // Store token in state
+      const res = await fetch(`${BACKEND_URL}/get-token`);
+      const data = await res.json();
+
+      if (data.error) {
+        alert("Too many requests, try again in a few minutes :(");
+        return;
+      }
+
+      setToken(data.token);
       navigate("/playGround");
     } catch (error) {
-      console.error("Permission denied:", error);
-      alert("Camera and microphone access are required to play!");
+      console.error("Error during play setup:", error);
+      alert("⚠️ Please allow access to your camera and microphone to play.");
     }
   };
 

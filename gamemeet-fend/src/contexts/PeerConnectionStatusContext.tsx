@@ -19,7 +19,7 @@ export const PeerConnectionStatusProvider: React.FC<{
 }> = ({ children }) => {
   const initialStatus: StatusType = {
     status: false,
-    statusMessage: "searching for Player... , please wait",
+    statusMessage: "searching for player... , please wait",
   };
   const [peerConnectionStatus, setPeerConnectionStatus] =
     useState<StatusType>(initialStatus);
