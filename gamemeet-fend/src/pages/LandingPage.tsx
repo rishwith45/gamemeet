@@ -15,8 +15,12 @@ const LandingPage: React.FC = () => {
 
   const handlePlayNow = async () => {
     try {
-      const micPerm = await navigator.permissions.query({ name: "microphone" });
-      const camPerm = await navigator.permissions.query({ name: "camera" });
+      const micPerm = await navigator.permissions.query({
+        name: "microphone" as PermissionName,
+      });
+      const camPerm = await navigator.permissions.query({
+        name: "camera" as PermissionName,
+      });
 
       if (micPerm.state === "denied" || camPerm.state === "denied") {
         alert(
