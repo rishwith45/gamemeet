@@ -205,8 +205,8 @@ const LandingPage: React.FC = () => {
           lineHeight: "1.5",
         }}
       >
-        Play exciting board games with strangers in real-time! Enjoy seamless
-        video chat while competing.
+        Play board games with strangers in real-time! Enjoy seamless video chat
+        while competing.
       </p>
 
       <button
@@ -229,6 +229,28 @@ const LandingPage: React.FC = () => {
       >
         Play Now
       </button>
+      <footer
+        style={{
+          marginTop: "50px",
+          fontSize: "14px",
+          color: "#ddd",
+          textAlign: "center",
+        }}
+      >
+        © {new Date().getFullYear()} Gamemeet — Follow for updates on{" "}
+        <a
+          href="https://www.linkedin.com/in/rishwith-marka-143233284/" // Replace with your actual LinkedIn URL
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: "#fcbf49",
+            textDecoration: "none",
+            fontWeight: "bold",
+          }}
+        >
+          LinkedIn
+        </a>
+      </footer>
     </div>
   );
 };
