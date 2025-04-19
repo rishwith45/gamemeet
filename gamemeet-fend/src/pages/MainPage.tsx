@@ -82,7 +82,7 @@ const MainPage: React.FC = () => {
             fontSize: "30px",
           }}
         >
-          GameMeet
+          GameMeet.in
         </h3>
 
         <img

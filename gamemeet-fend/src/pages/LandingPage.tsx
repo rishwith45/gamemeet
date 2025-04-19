@@ -187,7 +187,7 @@ const LandingPage: React.FC = () => {
           color: "#fcbf49",
         }}
       >
-        Gamemeet
+        Gamemeet.in
         <span style={{ marginLeft: "10px", marginTop: "20px" }}>
           <img
             src={logo}
