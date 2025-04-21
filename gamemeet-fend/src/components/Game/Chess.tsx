@@ -80,17 +80,29 @@ const ChessGame: React.FC = () => {
   }, [gameStatus]);
   // Handle piece movement
   const checkGameState = () => {
+    console.log(isMyTurn, "isMyTurn");
     console.log("Checking game state...");
     const chessCheck = new Chess(gameStates.chess?.board as string);
     console.log(chess.ascii());
     if (chessCheck.isCheckmate()) {
       console.log("game over");
-      setGameStatus(
-        "Checkmate! " +
-          (chess.turn() === "w" && orientation === "black"
-            ? "You Lose!!"
-            : "You Won!!")
-      );
+      console.log(chessCheck.turn());
+      let status;
+      if (chessCheck.turn() === "w") {
+        if (orientation === "white") {
+          status = "You Lose!!";
+        } else {
+          status = "You Won!!";
+        }
+      } else {
+        if (orientation === "black") {
+          status = "You Lose!!";
+        } else {
+          status = "You Won!!";
+        }
+      }
+
+      setGameStatus("Checkmate! " + status);
       resetGameAfterDelay();
     } else if (chessCheck.isDraw()) {
       setGameStatus("It's a Draw!");
