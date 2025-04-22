@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Video, VideoOff, Mic, MicOff, X } from "react-feather";
 import { useDataChannel } from "../../contexts/DataChannelContext";
 import { useSelfAudioVideo } from "../../contexts/SelfAudioVideoContext";
+import { useLocalStream } from "../../contexts/LocalStreamContext";
 
 interface VideoControllerProps {
   toggleVideo: () => void;
@@ -17,6 +18,7 @@ const VideoController: React.FC<VideoControllerProps> = ({
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { sendMessage } = useDataChannel();
   const { audioVideo, setAudioVideo } = useSelfAudioVideo();
+  const { localStreamRef } = useLocalStream();
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -69,6 +71,7 @@ const VideoController: React.FC<VideoControllerProps> = ({
     >
       <button
         onClick={() => {
+          if (localStreamRef.current?.srcObject === null) return;
           toggleVideo();
           setAudioVideo({ ...audioVideo, video: !audioVideo.video });
           sendMessage({
@@ -88,6 +91,7 @@ const VideoController: React.FC<VideoControllerProps> = ({
 
       <button
         onClick={() => {
+          if (localStreamRef.current?.srcObject === null) return;
           toggleAudio();
           setAudioVideo({
             ...audioVideo,
